@@ -1,0 +1,58 @@
+# Build Folders
+bin/
+obj/
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Mono auto generated files
+mono_crash.*
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# VS Code
+.vscode/
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# dotnet core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# StyleCop
+StyleCopReport.xml
+
+# JetBrains Rider
+.idea/
+
+# Rider's generated code analysis
+.idea_modules/
+
+# User-specific folders
+.vscode/
+.idea/
+.terraform/
+.terraform.lock.hcl
+.nuget/
+
+# Local History for Visual Studio
+.vs/
+
+# End of line normalization / EOL
+# Convert text files to LF in the repository, and have user-specific end of line normalization
+* text=auto
+
