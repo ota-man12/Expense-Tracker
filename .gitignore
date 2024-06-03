@@ -56,3 +56,5 @@ StyleCopReport.xml
 # Convert text files to LF in the repository, and have user-specific end of line normalization
 * text=auto
 
+expense-tracker/appsettings.json
+expense-tracker/appsettings.Development.json
