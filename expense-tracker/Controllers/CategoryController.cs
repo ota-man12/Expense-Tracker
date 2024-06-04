@@ -25,14 +25,17 @@ namespace expense_tracker.Controllers
         }
 
         // GET: Category/AddOrEdit
-        public IActionResult AddOrEdit(int id=0)
+        public IActionResult AddOrEdit(int id = 0)
         {
-            if(id==0){
-                return View(new Category());
+            if (!ModelState.IsValid)
+            {
+                return View();
             }
-            else{
-                return View(_context.Categories.Find(id));
-            }
+
+            var category = id == 0 ? new Category() : _context.Categories.Find(id);
+
+            return View(category);
+
         }
 
         // POST: Category/AddOrEdit
@@ -40,17 +43,23 @@ namespace expense_tracker.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddOrEdit([Bind("CategoryId,Title,Icon,Type")] Category category)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                if(category.CategoryId == 0){
-                    _context.Add(category);
-                }else{
-                    _context.Update(category);
-                }
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return View(category);
             }
-            return View(category);
+
+            if (category.CategoryId == 0)
+            {
+                await _context.AddAsync(category);
+            }
+            else
+            {
+                _context.Update(category);
+            }
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: Category/Delete/5
@@ -58,19 +67,26 @@ namespace expense_tracker.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
             if (_context.Categories == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Categories'  is null.");
-            }
-            var category = await _context.Categories.FindAsync(id);
-            if (category != null)
-            {
-                _context.Categories.Remove(category);
+                return Problem("Entity set 'ApplicationDbContext.Categories' is null.");
             }
 
+            var category = await _context.Categories.FindAsync(id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            _context.Categories.Remove(category);
             await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
-
     }
 }
